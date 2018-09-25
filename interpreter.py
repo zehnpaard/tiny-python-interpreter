@@ -27,3 +27,18 @@ class Interpreter:
                 self.ADD_TWO_VALUES()
             elif instruction == 'PRINT_ANSWER':
                 self.PRINT_ANSWER()
+
+if __name__ == '__main__':
+    interpreter = Interpreter()
+    code = {
+            'instructions' : [
+                ('LOAD_VALUE', 0),
+                ('LOAD_VALUE', 1),
+                ('ADD_TWO_VALUES', None),
+                ('LOAD_VALUE', 2),
+                ('ADD_TWO_VALUES', None),
+                ('PRINT_ANSWER', None),
+                ],
+            'numbers': [7, 5, 8]
+            }
+    interpreter.run(code)
