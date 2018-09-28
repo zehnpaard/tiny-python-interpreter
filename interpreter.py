@@ -36,14 +36,18 @@ class Interpreter:
         instructions = code['instructions']
         numbers = code['numbers']
         for step in instructions:
-            instruction, arg = step
+            instruction, raw_arg = step
+            arg = self.parse_argument(raw_arg)
             if instruction == 'LOAD_VALUE':
-                n = numbers[arg]
-                self.LOAD_VALUE(n)
+                self.LOAD_VALUE(arg)
             elif instruction == 'ADD_TWO_VALUES':
                 self.ADD_TWO_VALUES()
             elif instruction == 'PRINT_ANSWER':
                 self.PRINT_ANSWER()
+            elif instruction == 'STORE_NAME':
+                self.STORE_NAME(arg)
+            elif instruction == 'LOAD_NAME':
+                self.LOAD_NAME(arg)
 
 if __name__ == '__main__':
     interpreter = Interpreter()
