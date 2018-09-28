@@ -23,6 +23,15 @@ class Interpreter:
     def LOAD_NAME(self, name):
         self.stack.append(self.environment[name])
 
+    def parse_argument(self, instruction, argument, code):
+        numbers = {'LOAD_VALUE'}
+        names = {'STORE_NAME', 'LOAD_NAME'}
+
+        if instruction in numbers:
+            return code['numbers'][argument]
+        elif instruction in names:
+            return code['names'][argument]
+
     def run(self, code):
         instructions = code['instructions']
         numbers = code['numbers']
