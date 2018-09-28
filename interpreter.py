@@ -16,6 +16,13 @@ class Interpreter:
         total = n1 + n2
         self.stack.append(total)
 
+    def STORE_NAME(self, name):
+        val = self.stack.pop()
+        self.environment[name] = val
+
+    def LOAD_NAME(self, name):
+        self.stack.append(self.environment[name])
+
     def run(self, code):
         instructions = code['instructions']
         numbers = code['numbers']
