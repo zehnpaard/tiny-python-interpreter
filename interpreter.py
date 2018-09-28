@@ -1,6 +1,7 @@
 class Interpreter:
     def __init__(self):
         self.stack = []
+        self.environment = {}
 
     def LOAD_VALUE(self, number):
         self.stack.append(number)
