@@ -24,13 +24,15 @@ class Interpreter:
         self.stack.append(self.environment[name])
 
     def parse_argument(self, instruction, argument, code):
-        numbers = {'LOAD_VALUE'}
-        names = {'STORE_NAME', 'LOAD_NAME'}
+        arg_types = {
+                'LOAD_VALUE':'numbers',
+                'STORE_NAME':'names', 
+                'LOAD_NAME':'names',
+                }
 
-        if instruction in numbers:
-            return code['numbers'][argument]
-        elif instruction in names:
-            return code['names'][argument]
+        arg_type = arg_types.get(instruction, None)
+        if arg_type:
+            return code[arg_type][argument]
 
     def run(self, code):
         for step in code['instructions']:
