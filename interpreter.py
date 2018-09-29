@@ -37,7 +37,7 @@ class Interpreter:
         numbers = code['numbers']
         for step in instructions:
             instruction, raw_arg = step
-            arg = self.parse_argument(raw_arg)
+            arg = self.parse_argument(raw_arg, code)
             if instruction == 'LOAD_VALUE':
                 self.LOAD_VALUE(arg)
             elif instruction == 'ADD_TWO_VALUES':
