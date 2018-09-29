@@ -24,30 +24,25 @@ class Interpreter:
         self.stack.append(self.environment[name])
 
     def parse_argument(self, instruction, argument, code):
-        numbers = {'LOAD_VALUE'}
-        names = {'STORE_NAME', 'LOAD_NAME'}
+        arg_types = {
+                'LOAD_VALUE':'numbers',
+                'STORE_NAME':'names', 
+                'LOAD_NAME':'names',
+                }
 
-        if instruction in numbers:
-            return code['numbers'][argument]
-        elif instruction in names:
-            return code['names'][argument]
+        arg_type = arg_types.get(instruction, None)
+        if arg_type:
+            return code[arg_type][argument]
 
     def run(self, code):
-        instructions = code['instructions']
-        numbers = code['numbers']
-        for step in instructions:
+        for step in code['instructions']:
             instruction, raw_arg = step
-            arg = self.parse_argument(raw_arg)
-            if instruction == 'LOAD_VALUE':
-                self.LOAD_VALUE(arg)
-            elif instruction == 'ADD_TWO_VALUES':
-                self.ADD_TWO_VALUES()
-            elif instruction == 'PRINT_ANSWER':
-                self.PRINT_ANSWER()
-            elif instruction == 'STORE_NAME':
-                self.STORE_NAME(arg)
-            elif instruction == 'LOAD_NAME':
-                self.LOAD_NAME(arg)
+            arg = self.parse_argument(instruction, raw_arg, code)
+            method = getattr(self, instruction)
+            if arg is None:
+                method()
+            else:
+                method(arg)
 
 if __name__ == '__main__':
     interpreter = Interpreter()
