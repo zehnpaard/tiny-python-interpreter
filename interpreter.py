@@ -33,21 +33,14 @@ class Interpreter:
             return code['names'][argument]
 
     def run(self, code):
-        instructions = code['instructions']
-        numbers = code['numbers']
-        for step in instructions:
+        for step in code['instructions']:
             instruction, raw_arg = step
             arg = self.parse_argument(instruction, raw_arg, code)
-            if instruction == 'LOAD_VALUE':
-                self.LOAD_VALUE(arg)
-            elif instruction == 'ADD_TWO_VALUES':
-                self.ADD_TWO_VALUES()
-            elif instruction == 'PRINT_ANSWER':
-                self.PRINT_ANSWER()
-            elif instruction == 'STORE_NAME':
-                self.STORE_NAME(arg)
-            elif instruction == 'LOAD_NAME':
-                self.LOAD_NAME(arg)
+            method = getattr(self, instruction)
+            if arg is None:
+                method()
+            else:
+                method(arg)
 
 if __name__ == '__main__':
     interpreter = Interpreter()
